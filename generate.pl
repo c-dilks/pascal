@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-use bigint;
+use bignum;
 use Data::Dumper;
 use POSIX "fmod";
 
@@ -47,6 +47,9 @@ foreach $line (<FIBONACCI>) {
 my $outname = "data/triangle_${divisor}.dat";
 open(my $datfile, '>', $outname) or die; # data table
 
+my $a;
+my $b;
+
 for($r=0; $r<$max_row; $r++) {
   # compute coefficents
   if($r==0) { $ac[0]=1; } 
@@ -68,13 +71,14 @@ for($r=0; $r<$max_row; $r++) {
     $hy = $max_row - $r;
 
     # set state of coefficient 
-    #if($r>0) { $state = $ac[$c] % $r ? 2:1; }
-    #if($r>0) { $state = $ac[$c] % 5 == 0 ? 2:1; }
-    #if(grep {$ac[$c] eq $_} @perflist) { $state = 2; }
-    #if(grep {$ac[$c] eq $_} @fiblist) { $state = 2; }
-    #if($r>0) { $state = $ac[$c] % $r; }
     #if($r>0) { $state = $ac[$c] % $divisor; }
-    if($r>0) { $state = fmod($ac[$c],$divisor); }
+    #if($r>0) { $state = fmod($ac[$c],$divisor); }
+    if($r>0) { 
+      $a = int($ac[$c]*10);
+      $b = int($divisor*10);
+      $state = ( $a % $b ) / 10; 
+    }
+
     else { $state = 1; }
     
     # write out
