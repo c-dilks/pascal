@@ -48,7 +48,18 @@ foreach $line (<FIBONACCI>) {
 }
 #print Dumper(\@fiblist);
 
-my $outname = "data/triangle_${divisor}.dat";
+
+# add up to $nLead leading zeros
+my $nLead = 2;
+my $suffix = "$divisor";
+my $p;
+for($p=1; $p<=$nLead; $p++) {
+  if($divisor<10**$p) { $suffix = "0$suffix"; }
+}
+
+my $outname = "data/triangle_${suffix}.dat";
+printf "outname = $outname\n";
+exit
 open(my $datfile, '>', $outname) or die; # data table
 
 my $a;
