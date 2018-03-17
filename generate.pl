@@ -7,10 +7,14 @@ use POSIX "fmod";
 
 my $max_row = 500;
 my $divisor = 8;
+my $deciDigits = 0;
 if($#ARGV>=0) { 
   $max_row = $ARGV[0];
   if($#ARGV>=1) { 
     $divisor = $ARGV[1];
+    if($#ARGV>=2) { 
+      $deciDigits = $ARGV[2];
+    }
   }
 }
 
@@ -49,6 +53,8 @@ open(my $datfile, '>', $outname) or die; # data table
 
 my $a;
 my $b;
+my $ee = 10**$deciDigits;
+
 
 for($r=0; $r<$max_row; $r++) {
   # compute coefficents
@@ -74,9 +80,9 @@ for($r=0; $r<$max_row; $r++) {
     #if($r>0) { $state = $ac[$c] % $divisor; }
     #if($r>0) { $state = fmod($ac[$c],$divisor); }
     if($r>0) { 
-      $a = int($ac[$c]*10);
-      $b = int($divisor*10);
-      $state = ( $a % $b ) / 10; 
+      $a = int($ac[$c]*$ee);
+      $b = int($divisor*$ee);
+      $state = ( $a % $b ) / $ee; 
     }
 
     else { $state = 1; }
