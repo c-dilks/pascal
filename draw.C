@@ -4,6 +4,16 @@ Double_t side_length = 1;
 Double_t s3 = TMath::Sqrt(3);
 
 void draw(Int_t n_x, TString divis) {
+
+  //50 = random colors
+  //51 = deep sea
+  //52 = monochrome
+  //53 = fire
+  //54 = blue/yellow
+  //55 = rainbow
+  //56 = blackbody
+  gStyle->SetPalette(55);
+
   TString infile_name = "data/triangle_"+divis+".dat";
   cout << "reading " << infile_name << endl;
   TTree * tr = new TTree();
@@ -27,9 +37,10 @@ void draw(Int_t n_x, TString divis) {
     hc->Fill(cx,cy,st);
   };
 
-  TCanvas * canv = new TCanvas("canv","canv",1000,1000);
+  TCanvas * canv = new TCanvas("canv","canv",3000,3000);
   gStyle->SetOptStat(0);
-  hc->SetTitle("pascal");
+  TString hcT = "pascal mod " + divis;
+  hc->SetTitle(hcT.Data());
   hc->Draw("ahcolz");
   canv->Print(outfile_name.Data(),"png");
 }
